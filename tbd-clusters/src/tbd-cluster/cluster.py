@@ -1,9 +1,15 @@
+"""
+A module for understanding clustered data
+"""
+from math import sqrt, ceil
 import pandas as pd
 import numpy as np
 from sklearn import datasets
 from sklearn.decomposition import PCA
 from plotly.graph_objs import FigureWidget, Scatter, Table
 import plotly.offline as po
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 from ipywidgets import VBox
 po.init_notebook_mode()
 
@@ -51,3 +57,25 @@ def create_lasso(data=df):
 
     # Put everything together
     VBox((f, t))
+# create histogram
+def create_histograms(df=df, exclude_cols=['target', 'x', 'y']):
+    """
+    Input: Dataframe, list of columns to exclude
+    Output: Plotly FigureWidget with histograms of each column
+    """
+    curr_df = df.drop(exclude_cols, axis=1)
+    print(curr_df.columns)
+    r = int(sqrt(len(curr_df.columns)))
+    c = ceil(len(curr_df.columns) / r)
+    print(r, c)
+    fig = make_subplots(rows=r, cols=c)
+    col_num =0
+    for i in range(1, r+1):
+        for j in range(1, c+1):
+            print(i, j)
+            fig.add_trace(go.Histogram(x=curr_df[curr_df.columns[col_num]], name=curr_df.columns[col_num]), row=i, col=j) 
+            fig.add_annotation(xref="x domain",yref="y domain",x=0.5, y=1.2, showarrow=False,
+                   text=f"<b>{curr_df.columns[col_num]}</b>", row=i, col=j)
+            col_num += 1
+    fig.show()
+create_histograms()
