@@ -54,7 +54,7 @@ df = pd.DataFrame(data= np.c_[iris['data'], iris['target']],
                      columns= iris['feature_names'] + ['target'])
 
 # create histogram
-def create_histograms(df=df, exclude_cols=['_x', '_y', 'target'], legend=True):
+def create_histograms(df=df, exclude_cols=None, legend=True):
     """
     Creates histograms of features in selected region and all data
     ---
@@ -68,7 +68,8 @@ def create_histograms(df=df, exclude_cols=['_x', '_y', 'target'], legend=True):
     legend (default True): Whether to show legend on plots
     """
     curr_df = df.drop(exclude_cols, axis=1)
-
+    if exclude_cols is None:
+        exclude_cols = ['_x', '_y', 'target']
     # find number of rows and columns
     r = int(sqrt(len(curr_df.columns)))
     c = ceil(len(curr_df.columns) / r)
@@ -141,7 +142,7 @@ def explain_cluster(df, x_cols, num_factors = 10, dtreeviz_plot=True):
            filled = True)
         out
 
-def create_lasso(df, mode='table', label_col=None, exclude_cols=[], num_factors = 10, dtreeviz_plot=True):
+def create_lasso(df, mode='table', label_col=None, exclude_cols=None, num_factors = 10, dtreeviz_plot=True):
     """
     Create Lasso tool to analyze lassoed data via below mode options
     ---
@@ -163,6 +164,9 @@ def create_lasso(df, mode='table', label_col=None, exclude_cols=[], num_factors 
     TOP_FACTORS = mode == 'explainer'
     IS_TABLE = mode == 'table'
 
+    if exclude_cols is None:
+        exclude_cols = []
+    
     # drop non-numeric types
     df = df.select_dtypes(include='number')
 
