@@ -3,3 +3,9 @@
 # gene_labels.csv
 *
 !clustersight
+.ipynb_checkpoints
+clustering.ipynb
+__pycache__
+plotly-f.py
+Module Test.ipynb
+D3-things
