@@ -48,13 +48,13 @@ import pandas as pd
 import plotly
 import plotly.graph_objects as go
 
-# Load the Iris dataset
-iris = datasets.load_iris()
-df = pd.DataFrame(data= np.c_[iris['data'], iris['target']],
-                     columns= iris['feature_names'] + ['target'])
+# # Load the Iris dataset
+# iris = datasets.load_iris()
+# df = pd.DataFrame(data= np.c_[iris['data'], iris['target']],
+#                      columns= iris['feature_names'] + ['target'])
 
 # create histogram
-def create_histograms(df=df, exclude_cols=None, legend=True):
+def create_histograms(df, exclude_cols=None, legend=True):
     """
     Creates histograms of features in selected region and all data
     ---
@@ -76,8 +76,7 @@ def create_histograms(df=df, exclude_cols=None, legend=True):
 
     fig = make_subplots(rows=r+1, cols=c+1)
     col_num = 0
-    max_cols = len(df.columns)
-
+    max_cols = len(curr_df.columns)
     # create grid
     for i in range(1, r+1):
         for j in range(1, c+1):
@@ -167,9 +166,6 @@ def create_lasso(df, mode='table', label_col=None, exclude_cols=None, num_factor
     if exclude_cols is None:
         exclude_cols = []
     
-    # drop non-numeric types
-    df = df.select_dtypes(include='number')
-
     s = widgets.Output()
 
     # format PCA
@@ -185,7 +181,6 @@ def create_lasso(df, mode='table', label_col=None, exclude_cols=None, num_factor
     f = go.FigureWidget()
     f.update_layout(dragmode='lasso')
     f.layout.title = "Data Lasso Scatterplot"
-
     # If label_col is provided, add color-coding for labels
     if label_col is not None:
         # define color cycle
@@ -210,7 +205,12 @@ def create_lasso(df, mode='table', label_col=None, exclude_cols=None, num_factor
     scatter.marker.opacity = 0.5
     # t is for "table", but can also be where data is
     t = None
-    
+
+    # drop non-numeric types
+    dropped_columns = [col for col in df.columns if col not in df.select_dtypes(include='number').columns]
+    df = df.select_dtypes(include='number')
+    exclude_cols = [col for col in exclude_cols if col not in dropped_columns]
+
     if IS_TABLE:
         # Create a table FigureWidget that updates on selection from points in the scatter plot of f
         t = FigureWidget([Table(
