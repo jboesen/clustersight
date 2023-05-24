@@ -1,3 +1,5 @@
-clustering-env
-gene_exp.csv
-gene_labels.csv
+# clustering-env
+# gene_exp.csv
+# gene_labels.csv
+*
+!clustersight
