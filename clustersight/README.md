@@ -1,5 +1,5 @@
-# Clustering Explorer
-The Clustering Explorer allows users to interactively analyze which factors in a dataset are most associated with clusters. Users can lasso points of interest in a 2D plot of the data, which is created using Principal Component Analysis (PCA) for dimensionality reduction. The tool provides three modes of analysis: 'table', 'histogram', and 'explainer'.
+# ClusterSight
+The ClusterSight library allows users to interactively analyze which factors in a dataset are most associated with clusters. Users can lasso points of interest in a 2D plot of the data, which is created using Principal Component Analysis (PCA) for dimensionality reduction. The tool provides three modes of analysis: 'table', 'histogram', and 'explainer'.
 
 ## Usage
 ### Create Lasso Tool
