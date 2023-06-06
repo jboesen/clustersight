@@ -17,9 +17,12 @@ a sampling method or dimensionality reduction techniques before using this tool.
 Functions:
 create_lasso(df, mode, label_col, exclude_cols, num_factors, dtreeviz_plot)
 -- Creates a lasso tool for interactive data analysis.
+create_lasso_3d(df, mode, label_col, exclude_cols, num_factors, dtreeviz_plot)
+-- Creates a 3d visualization for data (no lasso tool)
 
 Example:
 >> create_lasso(df, mode='table', label_col=None, exclude_cols=[], num_factors = 10, dtreeviz_plot=True)
+>> create_lasso_3d(df, mode='table', label_col=None, exclude_cols=[], num_factors = 10, dtreeviz_plot=True)
 
 This module depends on the following libraries:
 - Python 3.6+
